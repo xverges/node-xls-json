@@ -1,21 +1,83 @@
 var fs = require('fs');
 var xlsjs = require('xlsjs');
+var cvcsv = require('csv');
+var record = []
+var header = []
 
-xls_json = function(config) {
+exports = module.exports = XLS_json;
+
+// exports.XLS_json = XLS_json;
+
+function XLS_json (config) {
+  console.log(config)
   if(!config.input) {
-    console.error("You must have to choose a file");
+    console.error("You miss a input file");
+    process.exit(1);
   }
 
-  var wb = xlsjs.readFile(config.input);
-  var filename, sheetname = '', target_sheet = '';
+  if(!config.output) {
+    console.error("You miss a output file");
+    process.exit(2);
+    
+  }
+
+  var cv = new CV(config);
+  
+}
+
+function CV(config) {
+  var wb = this.load_xls(config.input)
+  var ws = this.ws(wb);
+  var csv = this.csv(ws)
+  this.cvjson(csv, config.output)
+}
+
+CV.prototype.load_xls = function(input) {
+  return xlsjs.readFile(input);
+}
+
+CV.prototype.ws = function(wb) {
+  var target_sheet = '';
+
   if(target_sheet === '') 
     target_sheet = wb.SheetNames[0];
   ws = wb.Sheets[target_sheet];
-
-  //make csv
-  var csv_file = xlsjs.utils.make_csv(ws)
-  var stream = fs.createWriteStream(config.output, { flags : 'w' });
-  stream.write(csv_file);
+  return ws;
 }
 
-module.exports = xls_json;
+CV.prototype.csv = function(ws) {
+  return csv_file = xlsjs.utils.make_csv(ws)
+}
+
+CV.prototype.cvjson = function(csv, output) {
+  cvcsv()
+    .from.string(csv)
+    .transform( function(row){
+      row.unshift(row.pop());
+      return row;
+    })
+    .on('record', function(row, index){
+      
+      if(index === 0) {
+        header = row;
+      }else{
+        var obj = {};
+        header.forEach(function(column, index) {
+          obj[column] = row[index];
+        })
+        record.push(obj);
+      }
+      console.log('#'+index+' '+JSON.stringify(row));
+    })
+    .on('end', function(count){
+      // when writing to a file, use the 'close' event
+      // the 'end' event may fire before the file has been written
+      console.log('Number of lines: '+count);
+      var stream = fs.createWriteStream(output, { flags : 'w' });
+      stream.write(JSON.stringify(record));
+      
+    })
+    .on('error', function(error){
+      console.log(error.message);
+    });
+}

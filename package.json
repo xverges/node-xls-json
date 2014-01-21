@@ -10,6 +10,7 @@
   "author": "chilijung <chilijung@gmail.com> (http://lijung.com/)",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "xlsjs": "~0.5.1--"
+    "xlsjs": "~0.5.1--",
+    "csv": "~0.3.6"
   }
 }
