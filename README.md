@@ -20,7 +20,8 @@ Converting xls file to json files using nodejs
       console.error(err);
     } else {
       console.log(result);
-    });
+    }
+  });
 ```
 
 In config object, you have to enter an input path. But If you don't want to output any file you can set to `null`.
