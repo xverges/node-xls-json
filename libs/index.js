@@ -9,7 +9,6 @@ exports = module.exports = XLS_json;
 // exports.XLS_json = XLS_json;
 
 function XLS_json (config, callback) {
-  console.log(config)
   if(!config.input) {
     console.error("You miss a input file");
     process.exit(1);
