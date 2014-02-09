@@ -1,7 +1,7 @@
 var xls_json = require('../')
 
 xls_json({
-  input: __dirname + '/number_format.xls',
+  input: __dirname + '/sample-xls.xls',
   output: __dirname + '/test.json'
 }, function(err, result) {
   
