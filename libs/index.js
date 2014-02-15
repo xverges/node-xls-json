@@ -1,8 +1,6 @@
 var fs = require('fs');
 var xlsjs = require('xlsjs');
 var cvcsv = require('csv');
-var record = []
-var header = []
 
 exports = module.exports = XLS_json;
 
@@ -43,6 +41,9 @@ CV.prototype.csv = function(ws) {
 }
 
 CV.prototype.cvjson = function(csv, output, callback) {
+  var record = []
+  var header = []
+
   cvcsv()
     .from.string(csv)
     .transform( function(row){
