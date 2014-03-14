@@ -57,7 +57,7 @@ CV.prototype.cvjson = function(csv, output, callback) {
       }else{
         var obj = {};
         header.forEach(function(column, index) {
-          obj[column] = row[index];
+          obj[column] = row[index].trim();
         })
         record.push(obj);
       }

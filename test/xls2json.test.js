@@ -30,4 +30,18 @@ describe('xls to json', function() {
 		exist.should.be.true;
 	})
 
+	it('should trim', function() {
+		xls2json({
+			input: './sample/testtrim.xls',
+			output: './sample/test.json'
+		}, function(err, result) {
+			should.not.exist(err)
+			result.should.be.an.instanceOf(Object)
+
+			//test any space
+			var re= /\s/;
+			re.test(result[0].name).should.be.false;
+		})
+	})
+
 })
