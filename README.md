@@ -1,6 +1,6 @@
 # node-xls-json
 
-[![Build Status](https://travis-ci.org/DataGarage/node-xls-json.png?branch=master)](https://travis-ci.org/DataGarage/node-xls-json)
+[![Build Status](https://travis-ci.org/DataGarage/node-xls-json.svg?branch=master)](https://travis-ci.org/DataGarage/node-xls-json)
 
 Converting xls file to json files using nodejs
 
