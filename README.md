@@ -12,7 +12,7 @@ Converting xls file to json files using nodejs
 
 ## Usage
 
-```
+``` javascript
   node_xj = require("xls-to-json");
   node_xj({
     input: "sample.xls", 
