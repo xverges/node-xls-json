@@ -18,7 +18,7 @@ function XLS_json (config, callback) {
 
 function CV(config, callback) { 
   var wb = this.load_xls(config.input)
-  var ws = this.ws(wb);
+  var ws = this.ws(wb, config.sheet);
   var csv = this.csv(ws)
   this.cvjson(csv, config.output, callback)
 }
@@ -27,12 +27,8 @@ CV.prototype.load_xls = function(input) {
   return xlsjs.readFile(input);
 }
 
-CV.prototype.ws = function(wb) {
-  var target_sheet = '';
-
-  if(target_sheet === '') 
-    target_sheet = wb.SheetNames[0];
-  ws = wb.Sheets[target_sheet];
+CV.prototype.ws = function(wb, target_sheet) {
+  ws = wb.Sheets[target_sheet ? target_sheet : wb.SheetNames];
   return ws;
 }
 
