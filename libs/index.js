@@ -28,7 +28,7 @@ CV.prototype.load_xls = function(input) {
 }
 
 CV.prototype.ws = function(wb, target_sheet) {
-  ws = wb.Sheets[target_sheet ? target_sheet : wb.SheetNames];
+  ws = wb.Sheets[target_sheet ? target_sheet : wb.SheetNames[0]];
   return ws;
 }
 
