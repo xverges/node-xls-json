@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/DataGarage/node-xls-json",
   "dependencies": {
-    "xlsjs": "0.7.0",
+    "xlsx": "0.8.0",
     "csv": "~0.3.6"
   },
   "devDependencies": {

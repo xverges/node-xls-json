@@ -1,5 +1,5 @@
 var fs = require('fs');
-var xlsjs = require('xlsjs');
+var xlsx = require('xlsx');
 var cvcsv = require('csv');
 
 exports = module.exports = XLS_json;
@@ -24,7 +24,7 @@ function CV(config, callback) {
 }
 
 CV.prototype.load_xls = function(input) {
-  return xlsjs.readFile(input);
+  return xlsx.readFile(input);
 }
 
 CV.prototype.ws = function(wb, target_sheet) {
@@ -33,7 +33,7 @@ CV.prototype.ws = function(wb, target_sheet) {
 }
 
 CV.prototype.csv = function(ws) {
-  return csv_file = xlsjs.utils.make_csv(ws)
+  return csv_file = xlsx.utils.make_csv(ws)
 }
 
 CV.prototype.cvjson = function(csv, output, callback) {
