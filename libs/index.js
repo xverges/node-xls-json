@@ -8,7 +8,7 @@ exports = module.exports = XLS_json;
 
 function XLS_json (config, callback) {
   if(!config.input) {
-    throw new Error("node-xls-json: You did not provide an input file.");
+    callback(new Error("node-xls-json: You did not provide an input file."), null);
   }
 
   var cv = new CV(config, callback);
