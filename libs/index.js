@@ -12,14 +12,18 @@ function XLS_json (config, callback) {
   }
 
   var cv = new CV(config, callback);
-  
+
 }
 
-function CV(config, callback) { 
+function CV(config, callback) {
   var wb = this.load_xls(config.input)
   var ws = this.ws(wb, config.sheet);
   var csv = this.csv(ws)
-  this.cvjson(csv, config.output, callback)
+  this.cvjson(csv,
+              config.output,
+              config.header_row? config.header_row : 0,
+              config.skip_columns? config.skip_columns: [],
+              callback)
 }
 
 CV.prototype.load_xls = function(input) {
@@ -35,7 +39,7 @@ CV.prototype.csv = function(ws) {
   return csv_file = xlsx.utils.make_csv(ws)
 }
 
-CV.prototype.cvjson = function(csv, output, callback) {
+CV.prototype.cvjson = function(csv, output, header_row, skip_columns, callback) {
   var record = []
   var header = []
 
@@ -46,12 +50,17 @@ CV.prototype.cvjson = function(csv, output, callback) {
       return row;
     })
     .on('record', function(row, index){
-      
-      if(index === 0) {
+      if (index < header_row) {
+        return
+      }
+      if(index === header_row) {
         header = row;
       }else{
         var obj = {};
         header.forEach(function(column, index) {
+          if (skip_columns.includes(index)) {
+            return
+          }
           obj[column.trim()] = row[index].trim();
         })
         record.push(obj);
@@ -67,7 +76,7 @@ CV.prototype.cvjson = function(csv, output, callback) {
       } else {
       	callback(null, record);
       }
-      
+
     })
     .on('error', function(error){
       callback(error, null);
